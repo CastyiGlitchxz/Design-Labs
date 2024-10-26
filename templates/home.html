@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'header.html' %}
+    <title>{{appName}} | Home</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <nav class="nav_home">
+        <div class="nav_logo">
+            <h1 class="custom_design_labs_header_text_h1">{{appName}}</h1>
+            <p class="custom_design_labs_subtitle_text_p">Beta v1</p>
+        </div>
+
+        <div class="nav_links">
+            <button>Other Tools</button>
+            <button>Github</button>
+        </div>
+    </nav>
+    <p>Welcome to {{appName}} a simple to use Web and Ui\Ux designer</p>
+
+    <div>
+        <input type="text" placeholder="Enter project name" id="project_creation_input"/>
+        <button onclick="createProject();">Create Project</button>
+    </div>
+
+    <div id="projects_list"></div>
+    <script src="/static/app/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+/* This css file main is for the editor */
+/* Do not change anything in this file */
+
+temp {
+    width: 100%;
+    height: 100%;
+}
+
+console {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.78);
+    z-index: 1000;
+}
+
+#cmdLine {
+    height: 8%;
+    width: 100%;
+    align-self: flex-end;
+    background: rgba(0, 0, 0, 0.375);
+    color: white;
+    outline: none;
+    position: fixed;
+}
+
+#commands {
+    width: 100%;
+    height: 100%;
+    display: -moz-grid-line;
+    background: transparent;
+    align-self: baseline;
+    color: rgb(0, 182, 0);
+    font-size: 23px;
+    overflow-y: auto;
+    padding: 0px 0 7% 0px;
+    text-indent: 12px;
+}
+
+#topline {
+    width: 100%;
+    height: 12%;
+    align-self: baseline;
+    display: flex;
+    background: rgba(0, 0, 0, 0.375);
+}
+
+/* This css is for debug hover colors and effects */
+
+/* button:hover, temp:hover {
+    background: gray;
+} */
+
+.warning {
+    color: yellow;
+}
+
+.error {
+    color: red;
+}
+
+#editor {
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: row;
+}
+
+.panel {
+    width: 20%;
+    height: 100%;
+}
+
+#centerPiece {
+    width: 100%;
+    height: 100%;
+}
+
+.dropdown {
+    width: 100%;
+    height: 50px;
+    background: white;
+    border-radius: 10px;
+}
+
+.tooltip {
+    display: none;
+}
+
+.container {
+    width: fit-content;
+    height: fit-content;
+}
+
+.flex_container {
+    display: flex;
+}
+
+.grid_container {
+    display: grid;
+}

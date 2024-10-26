@@ -1,0 +1,38 @@
+/* Here is the css that work with render.html */
+/* I would making a comment above the code for different projects */
+
+/* Exmaple css */
+.custom_design_labs_button {
+    background: aqua;
+    color: blueviolet;
+    width: 200px;
+    height: 50px;
+    border: 1px solid red;
+    border-radius: 6px;
+}
+
+.custom_design_labs_button:hover {
+    background: rgb(0, 202, 202);
+}
+
+.custom_design_labs_input {
+    width: 240px;
+    height: 50px;
+    outline: none;
+    font-size: 23px;
+    text-indent: 12px;
+    border-radius: 6px;
+    border: 1px solid grey;
+}
+
+.custom_design_labs_header_text_h1 {
+    font-size: 50px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.custom_design_labs_subtitle_text_p {
+    font-size: 17px;
+    color: gray;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+/* End of example css */
