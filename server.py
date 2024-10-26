@@ -28,6 +28,10 @@ HTML_TEMPLATE = """
     </html>
 """
 
+projects_folder_dir = f"./templates/labs/projects"
+if not os.path.exists(projects_folder_dir):
+    os.makedirs(projects_folder_dir)
+
 @socketio.on("get_projects")
 def handle_project_fetching():
     """Handles project fetching"""
