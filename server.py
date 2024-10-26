@@ -27,6 +27,9 @@ HTML_TEMPLATE = """
     </body>
     </html>
 """
+projects_folder_dir = f"./templates/labs/projects"
+if not os.path.exists(projects_folder_dir):
+    os.makedirs(projects_folder_dir)
 
 @socketio.on("get_projects")
 def handle_project_fetching():
@@ -41,20 +44,16 @@ def handle_project_fetching():
 @socketio.on("create_project")
 def handle_project_creation(project_name):
     """Handles project creation"""
-    projects_folder_dir = f"./templates/labs/projects"
-    if not os.path.exists(projects_folder_dir):
-        os.makedirs(projects_folder_dir)
-
-        path = "./templates/labs/projects"
-        dir_list = os.listdir(path)
-        print("Files and directories in '", path, "' :")
-        # prints all files
-        print(dir_list)
-        project_dir = f"./templates/labs/projects/{project_name}"
-        if not os.path.exists(project_dir):
-            os.makedirs(project_dir)
-            with open(os.path.join(project_dir, 'render.html'), "w", encoding="UTF-8") as file1:
-                file1.write(HTML_TEMPLATE)
+    path = "./templates/labs/projects"
+    dir_list = os.listdir(path)
+    print("Files and directories in '", path, "' :")
+    # prints all files
+    print(dir_list)
+    project_dir = f"./templates/labs/projects/{project_name}"
+    if not os.path.exists(project_dir):
+        os.makedirs(project_dir)
+        with open(os.path.join(project_dir, 'render.html'), "w", encoding="UTF-8") as file1:
+            file1.write(HTML_TEMPLATE)
     emit('project_created', project_name)
 
 @app.route("/")
