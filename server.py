@@ -89,7 +89,7 @@ def editor(project_name):
     """Opens editor"""
     template_string = "editor.html"
     return flask.render_template(template_string,
-                                 selected_project = f"labs/projects/{project_name}/render.html", 
+                                 selected_project = f"labs/projects/{project_name}/render.html",
                                  appName = "Editor")
 
 
