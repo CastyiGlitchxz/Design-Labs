@@ -1,3 +1,4 @@
+[![Pylint](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/pylint.yml/badge.svg)](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/pylint.yml)
 [![ESLint](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/eslint.yml/badge.svg?branch=main)](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/eslint.yml)
 # How to use Design Labs
 
