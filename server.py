@@ -3,12 +3,12 @@ import os
 from flask import Flask
 import flask
 from flask_socketio import SocketIO, emit
-from configuration import projectManager, application
+from configuration import ProjectManager, application
 
 app = flask.Flask(__name__)
 socketio = SocketIO(app)
 
-project = projectManager (
+project = ProjectManager (
   '',
   'CastyiGlitchxz'
 )
@@ -27,9 +27,9 @@ HTML_TEMPLATE = """
     </body>
     </html>
 """
-projects_folder_dir = f"./templates/labs/projects"
-if not os.path.exists(projects_folder_dir):
-    os.makedirs(projects_folder_dir)
+PROJECTS_FOLDER_DIR = "./templates/labs/projects"
+if not os.path.exists(PROJECTS_FOLDER_DIR):
+    os.makedirs(PROJECTS_FOLDER_DIR)
 
 @socketio.on("get_projects")
 def handle_project_fetching():
@@ -62,9 +62,17 @@ def home():
     template_string = "home.html"
     return flask.render_template(
         template_string,
-        appName = application.appName,
-        project_name = project.projectName,
+        appName = application.app_name,
+        project_name = project.project_name,
     )
+
+@app.route("/projects")
+def projects():
+    """Returns porjects page"""
+    template_string = "projects.html"
+    return flask.render_template(template_string,
+                                 appName = application.app_name,
+                                 project_name = project.project_name,)
 
 @app.route("/projects/<project_name>")
 def open_project(project_name):
@@ -74,7 +82,7 @@ def open_project(project_name):
     # start_rich_presence(f"{project.user} has the project: {project.projectName} opened")
     return flask.render_template(template_string,
                                  selected_project = f"labs/projects/{project_name}/render.html",
-                                 appName = f"{application.appName} | {project.projectName}")
+                                 appName = f"{application.app_name} | {project.project_name}")
 
 @app.route("/editor/<project_name>")
 def editor(project_name):
