@@ -11,15 +11,9 @@
 
 # How to load Labs
 
- First go to /design/base.html
- base.html is the base of your lab and is responsible for displaying your work
- On your ide or file browser you should see a labs folder open it then create a new folder with the name of your lab and inside that file make a html file you can name it whatever you want
-## (ex: 'example_lab' inside that folder 'render.html')
- To load your lab go back to base.html and you should see a line of text that looks like 
-## <span style="color:red">{% extends '/labs/example_lab/render.html' %}</span> change that to <span style="color:green">{% extends '/labs/your_labs_name/your_render_file.html' %}</span>
- I know not thw most efficient way to load a lab, I'll come up with a better solution one day
+ When you first open Design Labs you will see the landing page. Look at the top where the navbar is and click the projects button to go to the projects page. The projects list will be empty by default, to create a project look for the text input and input your projects name. Then click the create project button.
 
-# What your files should look like
+ When you have successfully created a project, your project will be added to the projects list, where you can access it when you need to.
 
 ## Inside your render file
 ### The inside of your render file should like

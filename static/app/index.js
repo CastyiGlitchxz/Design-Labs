@@ -1,5 +1,11 @@
 const socket = io();
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightElement(block);
+    });
+});
+
 const get_projects = () => {
     socket.emit('get_projects');
 };

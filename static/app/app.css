@@ -5,7 +5,7 @@ body, html {
     width: 100%;
     height: 100%;
     display: grid;
-    background: ;
+    background: black;
     color: white;
 }
 
@@ -22,6 +22,7 @@ body, html {
     flex-direction: row;
     height: fit-content;
     align-items: center;
+    justify-content: space-between;
 }
 
 .nav_home .custom_design_labs_subtitle_text_p {
@@ -32,19 +33,32 @@ body, html {
 
 .nav_home .nav_links {
     height: 100%;
-    width: 80%;
+    width: 33pc;
     justify-content: right;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav_home .nav_links button {
+.download_button {
+    background: rebeccapurple !important;
+    color: white;
+    border-radius: 12px;
+    height: 40px !important;
+    width: 100px !important;
+}
+
+.nav_home .nav_links a {
     background: transparent;
     color: white;
     border: 0;
     height: 100%;
     min-width: 100px;
+    text-align: center;
+    text-decoration: none;
+    align-content: center;
 }
 
-.nav_home .nav_links button:hover {
-    background: blue;
+.nav_home .nav_links a:hover {
+    color: blue;
 }

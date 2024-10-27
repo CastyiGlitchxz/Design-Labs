@@ -4,31 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% include 'header.html' %}
+    {% include 'navigational_bar.html'%}
     <title>{{appName}} | Home</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-    <nav class="nav_home">
-        <div class="nav_logo">
-            <h1 class="custom_design_labs_header_text_h1">{{appName}}</h1>
-            <p class="custom_design_labs_subtitle_text_p">Beta v1</p>
-        </div>
+    <span>
+        <h1 class="custom_design_labs_header_text_h1">Welcome to {{appName}}</h1>
+        <h3 class="custom_design_labs_header_text_h3">A simple to use Web and Ui\Ux designer</h3>
+    </span>
 
-        <div class="nav_links">
-            <button>About</button>
-            <button>Other Tools</button>
-            <button>Github</button>
-            <button>Download</button>
-        </div>
-    </nav>
-    <p>Welcome to {{appName}} a simple to use Web and Ui\Ux designer</p>
+    <pre class="typewriter">
+        <code class="language-javascript">
+        function startup() {
+            console.log("Start designing professionally");
+        }
+        </code>
+    </pre>
 
-    <div>
-        <input type="text" placeholder="Enter project name" id="project_creation_input"/>
-        <button onclick="createProject();">Create Project</button>
-    </div>
+    <pre class="typewriter">
+        <code class="language-css">
+            /* Write great css with minmal effort*/
+            main {
+                background: black;
+                color: white;
+                margin: 0;
+            }
+        </code>
+    </pre>
 
-    <div id="projects_list"></div>
-    <script src="/static/app/index.js"></script>
+    <pre class="typewriter">
+        <code class="language-javascript">
+        var Design-Labs-Ending = "Welcome to Design Labs";
+
+        const code_end = () => {
+            console.log(Design-Labs-Ending);
+        }
+        </code>
+    </pre>
+
+    <script src="/static/app/index.js" type="module"></script>
 </body>
 </html>
