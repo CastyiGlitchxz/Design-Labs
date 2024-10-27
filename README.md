@@ -1,3 +1,5 @@
+[![Pylint](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/pylint.yml/badge.svg)](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/pylint.yml)
+[![ESLint](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/eslint.yml/badge.svg?branch=main)](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/eslint.yml)
 # How to use Design Labs
 
  To use Design Labs you first need to open your a terminal on your computer and cd to the location of server.py
