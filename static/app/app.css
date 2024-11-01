@@ -16,6 +16,7 @@ body, html {
 }
 
 .nav_home {
+    width: 100vw;
     background: black;
     color: white;
     display: flex;
@@ -61,4 +62,178 @@ body, html {
 
 .nav_home .nav_links a:hover {
     color: blue;
+}
+
+.home_code {
+    width: 100vw;
+}
+
+#discord_status {
+    background: rgb(54, 40, 74);
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 1em;
+    border-radius: 13px;
+    margin: 0em 0.8em;
+    display: flex;
+}
+
+#projects_list {
+    display: grid;
+    width: 80vw;
+    justify-content: center;
+    grid-template-columns: 100%;
+    justify-self: center;
+    grid-template-rows: repeat(auto-fit, minmax(calc(3em + 9px), 0fr));
+    background: linear-gradient(rgb(23, 14, 30), rgb(1, 1, 72),rgb(72, 38, 110));
+    border-radius: 10px;
+    bottom: 8rem;
+    position: relative;
+    border: 0.5px solid red;
+}
+
+.project_buttons {
+    text-align: left;
+    text-indent: 13px;
+    align-content: center;
+    height: 3.4rem;
+    border-radius: 12px;
+}
+
+.project_buttons::selection {
+    color: none;
+}
+
+.selected {
+    border: 1px solid blue;
+}
+
+#projects_list #projects_list_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    min-height: 3em;
+    max-height: 5em;
+    padding: 0 1em;
+}
+
+#projects_list #projects_list_header div {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+}
+
+.projects_list_command_option {
+    background: transparent;
+    font-size: 23px;
+    color: white;
+    height: 60%;
+    width: fit-content;
+    border: 0;
+    padding: 0 0px 0px 22px;
+}
+
+.projects_list_command_option:hover {
+    color: gray;
+    transition: ease-in-out 0.2s;
+}
+
+#delete_project_button:hover {
+    color: red;
+    transition: ease-in-out 0.2s;
+}
+
+.projects_input {
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #3b486b;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    text-indent: 12px;
+    height: 68% !important;
+    width: 21rem;
+    padding: 0 0.5rem;
+}
+
+.projects_input input {
+    background: transparent;
+    outline: none;
+    height: 100%;
+    border: 0;
+    color: rgb(234, 234, 234);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#project_creation_button {
+    height: 100% !important;
+}
+
+.project_controls {
+    justify-content: right;
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 80rem) {
+    .nav_home {
+        display: grid;
+        justify-content: center;
+        justify-items: center;
+        grid-template-columns: 100%;
+    }
+
+    .nav_home .nav_links {
+        display: grid;
+        width: 100%;
+        justify-content: center;
+        justify-items: center;
+        grid-template-columns: 100%;
+        font-size: 28px;
+        position: relative;
+    }
+
+    .nav_home .nav_links a {
+        width: 100%;
+        height: 80px;
+    }
+
+    .download_button {
+        width: 100% !important;
+        height: 56px !important;
+    }
+
+    .burger_button {
+        background: transparent;
+        width: 100%;
+        color: white;
+        height: 40px;
+        border: 0;
+        font-size: 30px;
+    }
+
+    text {
+      font-size: 70%;
+    }
+
+    .nav_closed {
+        .nav_links {
+            transform: translate(0, -25em);
+            height: 0px;
+            transition: ease-in-out 0.5s;
+        }
+    }
+
+    .nav_opened {
+        .nav_links {
+            transform: translate(0, 0);
+            height: 100%;
+            transition: ease-in-out 0.5s;
+        }
+    }
 }

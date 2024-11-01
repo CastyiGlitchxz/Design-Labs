@@ -7,28 +7,36 @@
     <title> {{appName}} | Design Labs</title>
 </head>
 <body>
-    <console>
-        <div id="commands">
+    <editor_main>
+        <console>
+            <div id="commands">
+            </div>
+
+            <input type="text" name="cmdLine" id="cmdLine" placeholder="Type a command here">
+        </console>
+
+        <div class="editor_nav">
+            <button>
+                <i class="fa-solid fa-play"></i>
+            </button>
         </div>
 
-        <input type="text" name="cmdLine" id="cmdLine" placeholder="Type a command here">
-    </console>
-
-    <div id="editor">
-        <div id="leftPanel" class="panel">
-            <input placeholder="Set Text"/>
+        <div id="editor">
+            <div id="leftPanel" class="panel">
+                <input placeholder="Set Text"/>
+            </div>
+            <div id="centerPiece">
+                {% include 'base.html' %}
+            </div>
+            <div id="rightPanel" class="panel">
+                <input placeholder="Set Text" type="text"/>
+                <button>Set</button>
+            </div>
         </div>
-        <div id="centerPiece">
-            {% include 'base.html' %}
-        </div>
-        <div id="rightPanel" class="panel">
-            <input placeholder="Set Text" type="text"/>
-            <button>Set</button>
-        </div>
-    </div>
-    <script src="/static/app/app.js" type="module"></script>
-    <script src="/static/app/functions.js"></script>
-    <script src="https://kit.fontawesome.com/69e44b2a4c.js" crossorigin="anonymous"></script>
-    <script src="/static/app/engine.js"></script>
+        <script src="/static/app/app.js" type="module"></script>
+        <script src="/static/app/functions.js"></script>
+        <script src="https://kit.fontawesome.com/69e44b2a4c.js" crossorigin="anonymous"></script>
+        <script src="/static/app/engine.js"></script>
+    </editor_main>
 </body>
 </html>

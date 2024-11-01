@@ -1,6 +1,13 @@
 /* This css file main is for the editor */
 /* Do not change anything in this file */
 
+editor_main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 2.8rem;
+}
+
 temp {
     width: 100%;
     height: 100%;
@@ -76,6 +83,14 @@ console {
 #centerPiece {
     width: 100%;
     height: 100%;
+    contain: content;
+}
+
+.editor_nav {
+    width: 100vw;
+    height: 5vh;
+    background: transparent;
+    border-bottom: 0.9px solid gray;
 }
 
 .dropdown {
