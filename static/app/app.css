@@ -170,7 +170,7 @@ body, html {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#project_creation_button {
+#open_project_creation_button {
     height: 100% !important;
 }
 
@@ -178,6 +178,78 @@ body, html {
     justify-content: right;
     display: flex;
     align-items: center;
+}
+
+.project_backdrop {
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(60px);
+    position: fixed;
+    display: none;
+}
+
+.project_create_popup {
+    width: 50rem;
+    height: 23rem;
+    display: grid;
+    align-self: center;
+    justify-self: center;
+    position: fixed;
+    background: linear-gradient(150deg, red, rgb(191, 10, 64), rebeccapurple);
+    border-radius: 12px;
+    align-items: center;
+    align-content: space-around;
+    padding: 36px 0px 36px 0px;
+    justify-content: center;
+    box-shadow: 7px 7px 17px rgba(12, 29, 187, 0.662);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.project_create_popup input[type=text] {
+    width: 20rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    text-indent: 12px;
+    border: 0;
+    outline: none;
+}
+
+.project_create_popup button {
+    border-radius: 9px;
+    background: rgb(0, 153, 255);
+    width: 20rem;
+    height: 2.7rem;
+    color: white;
+    border: 0;
+    transition: ease-in-out 0.21s;
+}
+
+.project_create_popup button:hover {
+    background: rgb(0, 110, 255);
+    color: rgb(217, 217, 217);
+    transition: ease-in-out 0.21s;
+}
+
+.inlcusion_checkbox {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-indent: 6px;
+}
+
+/* .inlcusion_checkbox input[type=checkbox] {
+    
+} */
+
+#close_creation_popup_button {
+    width: 47px;
+    top: 6px;
+    position: absolute;
+    right: 6px;
+    background: transparent;
+    font-size: 32px;
 }
 
 @media screen and (max-width: 80rem) {

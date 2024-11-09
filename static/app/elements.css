@@ -4,7 +4,7 @@
 editor_main {
     width: 100%;
     height: 100%;
-    display: grid;
+    display: flex;
     grid-template-rows: 2.8rem;
 }
 
@@ -20,6 +20,14 @@ console {
     position: fixed;
     background: rgba(0, 0, 0, 0.78);
     z-index: 1000;
+}
+
+javascript_editor {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: grid;
+    background: rebeccapurple;
 }
 
 #cmdLine {
@@ -68,16 +76,21 @@ console {
 }
 
 #editor {
-    width: 100%;
-    height: 100%;
+    width: 95vw;
+    height: 100vh;
     background: black;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(calc(2em + 17px), 0fr));
 }
 
 .panel {
     width: 20%;
     height: 100%;
+}
+
+.editor_panels {
+    display: flex;
+    height: 94.5vh;
 }
 
 #centerPiece {
@@ -87,10 +100,133 @@ console {
 }
 
 .editor_nav {
-    width: 100vw;
+    width: 100%;
     height: 5vh;
+    display: inline-flex;
     background: transparent;
     border-bottom: 0.9px solid gray;
+    padding: 3px 3px 3px 3px;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.editor_nav button {
+    height: 100%;
+}
+
+#run_button {
+    color: lime;
+    background: transparent;
+    border: 1px solid darkslategrey;
+    border-radius: 5px;
+    width: 5rem;
+    margin: 0 4px;
+}
+
+#run_button:active {
+    border: 1px solid rebeccapurple;
+}
+
+.editor_explorer_nav {
+    display: grid;
+    background: rgb(54, 54, 54);
+    height: 100vh;
+    width: 4rem;
+    align-items: baseline;
+    align-content: baseline;
+    padding: 0px 5px 0px 5px;
+}
+
+.editor_explorer_nav button {
+    color: white;
+    background: transparent;
+    height: 6vh;
+    font-size: 25px;
+    border: 0;
+    border-radius: 7px;
+    margin: 4px 0px;
+}
+
+.editor_explorer_nav button:hover {
+    background: rgb(108, 108, 108);
+    transition: ease-in-out .4s;
+}
+
+#js_button:hover {
+    color: #f0db4f;
+}
+
+#css_button:hover {
+    color: #264de4;
+}
+
+.tab_block {
+    width: 100%;
+    height: 4vh;
+    background: red;
+    display: flex;
+    padding: 3px 3px 3px 3px;
+    justify-content: left;
+    overflow-x: scroll;
+    max-width: 91rem;
+}
+
+.tab {
+    height: 100%;
+    width: 8rem;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    background: transparent;
+    border-radius: 6px;
+    margin: 0px 3px;
+    padding: 2px 9px 0px 9px;
+    min-width: 8rem;
+}
+
+.tab:hover {
+    background: gray;
+    transition: .6s;
+}
+
+.tab button {
+    background: transparent;
+    color: white;
+    font-size: 19px;
+    border: 0;
+    height: 24px;
+    width: 24px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.tab button:hover {
+    background: green;
+    transition: .6s;
+}
+
+.menu_bar {
+    display: flex;
+}
+
+.menu_item {
+    display: inline-flex;
+    text-decoration: none;
+    color: white;
+    height: 24px;
+    width: 69px;
+    text-align: center;
+    border-radius: 5px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 13px;
+}
+
+.menu_item:hover {
+    /* border-bottom: 1px solid gray; */
+    background: gray;
 }
 
 .dropdown {

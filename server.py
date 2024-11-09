@@ -1,10 +1,12 @@
 """Server.py"""
 import os
 import shutil
+from datetime import datetime
+import json
 from flask import Flask
 import flask
 from flask_socketio import SocketIO, emit
-from rpc import start_rich_presence
+from rpc import start_rich_presence, stop_rich_presence
 from configuration import ProjectManager, application
 
 app = flask.Flask(__name__)
@@ -17,10 +19,6 @@ project = ProjectManager (
   ''
 )
 
-HTML_TEMPLATE = """<main>
-
-</main>
-"""
 
 PROJECTS_FOLDER_DIR = "./templates/labs/projects"
 if not os.path.exists(PROJECTS_FOLDER_DIR):
@@ -36,40 +34,72 @@ def handle_project_fetching():
     """Handles project fetching"""
     path = "./templates/labs/projects"
     dir_list = os.listdir(path)
-    print("Files and directories in '", path, "' :")
-    # prints all files
-    print(dir_list)
     emit('projects_list', dir_list)
 
 @socketio.on("create_project")
-def handle_project_creation(project_name):
+def handle_project_creation(project_name, html_filename, css_included, js_included):
     """Handles project creation"""
-    path = "./templates/labs/projects"
-    dir_list = os.listdir(path)
-    print("Files and directories in '", path, "' :")
-    # prints all files
-    print(dir_list)
+    if ".html" not in html_filename:
+        html_filename = html_filename + ".html"
+
+    project_details_template = {
+        "project_details": {
+            "project_name": f"{project_name}",
+            "creation_date": f"{datetime.today().strftime('%Y-%m-%d')}",
+            "creator": f"{project.user}",
+            "entry_point": f"{html_filename}",
+            "js_file": f"{js_included}",
+            "css_file": f"{css_included}"
+        }
+    }
+    json_object = json.dumps(project_details_template, indent=4)
+
     project_dir = f"./templates/labs/projects/{project_name}"
+    script_dir = f"./static/project_scripts/{project_name}"
+
+    html_template = f"""<link rel="stylesheet" href="{script_dir.replace('.', '')}/{project_name}.css"/>
+<main>
+
+    <script src="{script_dir.replace('.', '')}/{project_name}.js"></script>
+</main>
+"""
+
+    if css_included is True or js_included is True:
+        if not os.path.exists(script_dir):
+            if " " not in project_name:
+                os.makedirs(script_dir)
+
+    if css_included is True:
+        if not os.path.exists(f"{script_dir}/{project_name}.css"):
+            with open(os.path.join(script_dir, f"{project_name}.css"), "w", encoding="UTF-8") as css_file:
+                css_file.write(f"/* This is the css file for {project_name} */")
+
+    if js_included is True:
+        if not os.path.exists(f"{script_dir}/{project_name}.js"):
+            with open(os.path.join(script_dir, f"{project_name}.js"), "w", encoding="UTF-8") as js_file:
+                js_file.write(f"// This is the js file for {project_name}")
+
     if not os.path.exists(project_dir):
         if " " not in project_name:
             os.makedirs(project_dir)
-            with open(os.path.join(project_dir, 'render.html'), "w", encoding="UTF-8") as file1:
-                file1.write(HTML_TEMPLATE)
+            with open(os.path.join(project_dir, f"{html_filename}"), "w", encoding="UTF-8") as file1:
+                file1.write(html_template)
+            with open(os.path.join(project_dir, 'project_details.json'), "w", encoding="UTF-8") as prodetail:
+                prodetail.write(json_object)
             emit('project_created', project_name)
 
 @socketio.on("delete_project")
 def handle_project_deletion(project_name):
     """Handles project deletion"""
-    path = "./templates/labs/projects"
-    dir_list = os.listdir(path)
-    print("Files and directories in '", path, "' :")
-    # prints all files
-    print(dir_list)
+
     project_dir = f"./templates/labs/projects/{project_name}"
+    script_dir = f"./static/project_scripts/{project_name}"
+
     print(f"Deletion request received foler: {project_dir}")
     try:
         print(f"Project '{project_name}' at {project_dir} was deleted")
         shutil.rmtree(project_dir)
+        shutil.rmtree(script_dir)
     except OSError as error:
         print(f"Failed to delete project: Error was passed: {error}")
 
@@ -85,12 +115,31 @@ def rich_presence_handling():
     """Handles sending js discord presence status on refresh"""
     emit("send_presence_data", RICH_PRESENCE_STATUS)
 
+@socketio.on("stop_presence")
+def rich_presence_stopper():
+    """Handles stopping discord rich presence on socket request"""
+    stop_rich_presence()
+
 @socketio.on("connected_to_project")
 def handle_project_connections():
     """Handles users connecting to a project"""
     emit("user_connected", project.user, broadcast=True)
     print(f"User: '{project.user}' has connected to the project {project.project_name}")
 
+@socketio.on("request_project_javascript")
+def handle_javascript_sending():
+    """Handles JavaScript requests"""
+    script_dir = f"./static/project_scripts/{project.project_name}/{project.project_name}.js"
+    with open(script_dir, "r", encoding="UTF-8") as js_file:
+        for lines in js_file:
+            emit("javascript_received", lines)
+
+@socketio.on("javascript_file_change")
+def handle_javascript_changes(code):
+    """Handles JavaScript Changes"""
+    script_dir = f"./static/project_scripts/{project.project_name}/{project.project_name}.js"
+    with open(script_dir, "w", encoding="UTF-8") as js_file:
+        js_file.write(code);
 
 @app.route("/")
 def home():
@@ -106,31 +155,35 @@ def home():
 
 @app.route("/projects")
 def projects():
-    """Returns porjects page"""
+    """Returns projects page"""
     template_string = "projects.html"
     if RICH_PRESENCE_STATUS == "Discord is connected":
         start_rich_presence(f"{project.user} is browsing: Projects | {application.app_name}")
     return flask.render_template(template_string,
-                                 appName = application.app_name,
-                                 project_name = project.project_name,)
+                                 appName = application.app_name)
 
 @app.route("/projects/<project_name>")
 def open_project(project_name):
     """Opens a project on users disk"""
     template_string = "base.html"
     project.project_name = project_name
-    if RICH_PRESENCE_STATUS == "Discord is connected":
-        start_rich_presence(f"{project.user} is Designing: {project_name}")
-    return flask.render_template(template_string,
-                                 selected_project = f"labs/projects/{project_name}/render.html",
-                                 appName = f"{application.app_name} | {project.project_name}")
+    with open(f'templates/labs/projects/{project_name}/project_details.json', encoding="UTF-8") as details:
+        data = json.load(details)
+        if RICH_PRESENCE_STATUS == "Discord is connected":
+            start_rich_presence(f"{project.user} is Designing: {project_name}")
+        return flask.render_template(template_string,
+                                    selected_project = f"labs/projects/{project_name}/{data["project_details"]["entry_point"]}",
+                                    appName = f"{application.app_name} | {project.project_name}")
 
 @app.route("/editor/<project_name>")
 def editor(project_name):
     """Opens editor"""
     template_string = "editor.html"
-    return flask.render_template(template_string,
-                                 selected_project = f"labs/projects/{project_name}/render.html",
+    project.project_name = project_name
+    with open(f'templates/labs/projects/{project_name}/project_details.json', encoding="UTF-8") as details:
+        data = json.load(details)
+        return flask.render_template(template_string,
+                                 selected_project = f"labs/projects/{project_name}/{data["project_details"]["entry_point"]}",
                                  appName = "Editor")
 
 

@@ -3,6 +3,5 @@ __pycache__/
 .DS_Store
 *u2engine.py
 templates/labs/projects
-static/project_scripts/css/*
-static/project_scripts/js/*
+static/project_scripts/*
 node_modules/
