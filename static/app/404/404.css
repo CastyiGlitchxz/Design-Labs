@@ -1,0 +1,58 @@
+body {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    font-family: "Funnel Display";
+    background-image: url('/static/app/images/favicon.ico') !important;
+    background-position: center !important;
+    background-repeat: no-repeat;
+    contain: content;
+    background-size: cover !important;
+    backdrop-filter: blur(12px);
+}
+
+.centered-content {
+    position: relative;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: space-evenly;
+    height: 30rem;
+    width: 60rem;
+    min-height: 20rem;
+    padding: 7rem;
+    background: #0000009c;
+    border-radius: 20px;
+    box-shadow: 7px 7px 17px 1px #161616;
+}
+
+.logo_text {
+    font-size: 40px !important;
+}
+
+.return-button {
+    background: linear-gradient(90deg, red, blue, rebeccapurple);
+    padding: 2px;
+    display: flex;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.return-button a {
+    width: 150px;
+    height: 35px;
+    display: flex;
+    border-radius: inherit;
+    color: white;
+    background: rgba(0, 0, 0, 0.483);
+    border: 0;
+    font-size: 16px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.return-button:active {
+    background: blue;
+}

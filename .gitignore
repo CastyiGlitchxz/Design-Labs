@@ -4,4 +4,6 @@ __pycache__/
 *u2engine.py
 templates/labs/projects
 static/project_scripts/*
+static/app/images/*
 node_modules/
+config/

@@ -3,14 +3,26 @@ import os
 import shutil
 from datetime import datetime
 import json
-from flask import Flask
+import configparser
+from flask import Flask, request
+from flask_login import login_required, login_user, current_user, logout_user
 import flask
 from flask_socketio import SocketIO, emit
+from user import login_manager, User, load_user
+from database import try_account_access
 from rpc import start_rich_presence, stop_rich_presence
 from configuration import ProjectManager, application
 
 app = flask.Flask(__name__)
 socketio = SocketIO(app)
+
+config = configparser.ConfigParser()
+config.read("config/service.config")
+
+SECRET_KEY = config["app_keys"]["secret_key"]
+
+login_manager.init_app(app)
+app.secret_key = SECRET_KEY
 
 RICH_PRESENCE_STATUS = "Discord is not connected"
 
@@ -18,7 +30,6 @@ project = ProjectManager (
   '',
   ''
 )
-
 
 PROJECTS_FOLDER_DIR = "./templates/labs/projects"
 if not os.path.exists(PROJECTS_FOLDER_DIR):
@@ -139,12 +150,14 @@ def handle_javascript_changes(code):
     """Handles JavaScript Changes"""
     script_dir = f"./static/project_scripts/{project.project_name}/{project.project_name}.js"
     with open(script_dir, "w", encoding="UTF-8") as js_file:
-        js_file.write(code);
+        js_file.write(code)
 
 @app.route("/")
 def home():
     """Launches the home page"""
     template_string = "home.html"
+    u = current_user
+    print(u)
     if RICH_PRESENCE_STATUS == "Discord is connected":
         start_rich_presence(f"{project.user} is browsing: Home | {application.app_name}")
     return flask.render_template(
@@ -153,7 +166,31 @@ def home():
         project_name = project.project_name,
     )
 
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    """Returns login page"""
+    template_string = "login/login.html"
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        user = try_account_access(username, password)
+
+        if user is True:
+            login_user(load_user(user))
+            return flask.redirect(flask.url_for('home'))
+
+    return flask.render_template(template_string, appName = application.app_name)
+
+@app.route('/logout')
+def logout():
+    """Logs a user out"""
+    logout_user()
+    return 'Logged out'
+
 @app.route("/projects")
+@login_required
 def projects():
     """Returns projects page"""
     template_string = "projects.html"
@@ -167,7 +204,8 @@ def open_project(project_name):
     """Opens a project on users disk"""
     template_string = "base.html"
     project.project_name = project_name
-    with open(f'templates/labs/projects/{project_name}/project_details.json', encoding="UTF-8") as details:
+    with open(f'templates/labs/projects/{project_name}/project_details.json', 
+              encoding="UTF-8") as details:
         data = json.load(details)
         if RICH_PRESENCE_STATUS == "Discord is connected":
             start_rich_presence(f"{project.user} is Designing: {project_name}")
@@ -180,11 +218,17 @@ def editor(project_name):
     """Opens editor"""
     template_string = "editor.html"
     project.project_name = project_name
-    with open(f'templates/labs/projects/{project_name}/project_details.json', encoding="UTF-8") as details:
+    with open(f'templates/labs/projects/{project_name}/project_details.json',
+              encoding="UTF-8") as details:
         data = json.load(details)
         return flask.render_template(template_string,
                                  selected_project = f"labs/projects/{project_name}/{data["project_details"]["entry_point"]}",
                                  appName = "Editor")
+
+@app.errorhandler(404)
+def not_found(e):
+    """Envokes a 404 page when url not found on server"""
+    return flask.render_template("404/404.html", appName = application.app_name), 404
 
 
 # Note: this is not a production server
