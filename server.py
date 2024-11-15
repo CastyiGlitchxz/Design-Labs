@@ -4,12 +4,12 @@ import shutil
 from datetime import datetime
 import json
 import configparser
-from flask import Flask, request
-from flask_login import login_required, login_user, current_user, logout_user
+from flask import request
+from flask_login import login_user, current_user, logout_user
 import flask
 from flask_socketio import SocketIO, emit
-from user import login_manager, User, load_user
-from database import try_account_access
+from user import login_manager, load_user
+from database import try_account_access, add_account
 from rpc import start_rich_presence, stop_rich_presence
 from configuration import ProjectManager, application
 
@@ -30,6 +30,11 @@ project = ProjectManager (
   '',
   ''
 )
+
+user_data = {
+    "username": "",
+    "userid": "",
+}
 
 PROJECTS_FOLDER_DIR = "./templates/labs/projects"
 if not os.path.exists(PROJECTS_FOLDER_DIR):
@@ -82,20 +87,24 @@ def handle_project_creation(project_name, html_filename, css_included, js_includ
 
     if css_included is True:
         if not os.path.exists(f"{script_dir}/{project_name}.css"):
-            with open(os.path.join(script_dir, f"{project_name}.css"), "w", encoding="UTF-8") as css_file:
+            with open(os.path.join(script_dir, f"{project_name}.css"), "w",
+                      encoding="UTF-8") as css_file:
                 css_file.write(f"/* This is the css file for {project_name} */")
 
     if js_included is True:
         if not os.path.exists(f"{script_dir}/{project_name}.js"):
-            with open(os.path.join(script_dir, f"{project_name}.js"), "w", encoding="UTF-8") as js_file:
+            with open(os.path.join(script_dir, f"{project_name}.js"), "w",
+                      encoding="UTF-8") as js_file:
                 js_file.write(f"// This is the js file for {project_name}")
 
     if not os.path.exists(project_dir):
         if " " not in project_name:
             os.makedirs(project_dir)
-            with open(os.path.join(project_dir, f"{html_filename}"), "w", encoding="UTF-8") as file1:
+            with open(os.path.join(project_dir, f"{html_filename}"), "w",
+                      encoding="UTF-8") as file1:
                 file1.write(html_template)
-            with open(os.path.join(project_dir, 'project_details.json'), "w", encoding="UTF-8") as prodetail:
+            with open(os.path.join(project_dir, 'project_details.json'), "w",
+                      encoding="UTF-8") as prodetail:
                 prodetail.write(json_object)
             emit('project_created', project_name)
 
@@ -156,14 +165,14 @@ def handle_javascript_changes(code):
 def home():
     """Launches the home page"""
     template_string = "home.html"
-    u = current_user
-    print(u)
+    u = user_data
     if RICH_PRESENCE_STATUS == "Discord is connected":
         start_rich_presence(f"{project.user} is browsing: Home | {application.app_name}")
     return flask.render_template(
         template_string,
         appName = application.app_name,
         project_name = project.project_name,
+        hope = u['username'],
     )
 
 @app.route("/login", methods=["POST", "GET"])
@@ -178,26 +187,46 @@ def login():
         user = try_account_access(username, password)
 
         if user is True:
-            login_user(load_user(user))
+            login_user(load_user(username))
+            user_data.update({"username":load_user(username).username})
+            user_data.update({"userid":load_user(username).get_id()})
             return flask.redirect(flask.url_for('home'))
 
     return flask.render_template(template_string, appName = application.app_name)
+
+@app.route("/signup", methods=["POST", "GET"])
+def signup():
+    """Returns signup page"""
+    template_string = "signup/signup.html"
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        user = try_account_access(username, password)
+
+        if user is False:
+            add_account(username, password)
+            return flask.redirect(flask.url_for('login'))
+    return flask.render_template(template_string, appName= application.app_name)
 
 @app.route('/logout')
 def logout():
     """Logs a user out"""
     logout_user()
-    return 'Logged out'
+    return flask.redirect(flask.url_for('login'))
 
 @app.route("/projects")
-@login_required
 def projects():
     """Returns projects page"""
     template_string = "projects.html"
-    if RICH_PRESENCE_STATUS == "Discord is connected":
-        start_rich_presence(f"{project.user} is browsing: Projects | {application.app_name}")
-    return flask.render_template(template_string,
-                                 appName = application.app_name)
+    if current_user.is_authenticated:
+        if RICH_PRESENCE_STATUS == "Discord is connected":
+            start_rich_presence(f"{project.user} is browsing: Projects | {application.app_name}")
+        return flask.render_template(template_string,
+                                    appName = application.app_name)
+    else:
+        return flask.redirect(flask.url_for('login'))
 
 @app.route("/projects/<project_name>")
 def open_project(project_name):
