@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oh No!</title>
+    <link rel="stylesheet" href="/static/app/404/404.css">
+    {% include 'header.html' %}
+    {% include 'navigational_bar.html'%}
+</head>
+<body>
+    <div class="centered-content">
+        <h1 class="logo_text">Somethings not right!!!</h1>
+        <h3>PAGE NOT FOUND</h3>
+        <p>We failed to find the page your looking for</p>
+
+        <span class="return-button">
+            <a href="{{ url_for('home') }}">Return home</a>
+        </span>
+    </div>
+</body>
+</html>

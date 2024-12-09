@@ -1,3 +1,4 @@
+"""Configuration.py is responsible for app and project data"""
 class AppConfiguration:
     """App Configuration is responisble for controlling app details"""
     def __init__(self, app_name, app_version, app_desciption, contributers, source):
