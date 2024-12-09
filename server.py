@@ -10,7 +10,7 @@ socketio = SocketIO(app)
 
 project = ProjectManager (
   '',
-  'CastyiGlitchxz'
+  'Test Account'
 )
 
 HTML_TEMPLATE = """
