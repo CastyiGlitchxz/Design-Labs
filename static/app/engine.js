@@ -38,12 +38,13 @@ const addId = (elem, id) => {
 socket.emit("request_project_javascript");
 
 socket.on("javascript_received", (script) => {
+    console.log("Js rec")
     const submit_code_button = document.getElementById("submit_code_button");
     for (let index = 0; index < script.length; index++) {
-        javascript_editor[0].getElementsByTagName("code")[0].innerHTML += script[index];
+        javascript_editor[0].getElementById("submit_code_button")[0].innerHTML += script[index];
     }
 
     submit_code_button.onclick = function () {
-        socket.emit("javascript_file_change", javascript_editor[0].getElementsByTagName("code")[0].innerHTML)
+        socket.emit("javascript_file_change", javascript_editor[0].getElementById("submit_code_button")[0].innerHTML)
     }
 });

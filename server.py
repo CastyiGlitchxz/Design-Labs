@@ -10,7 +10,6 @@ import flask
 from flask_socketio import SocketIO, emit
 from user import login_manager, load_user
 from database import try_account_access, add_account
-from rpc import start_rich_presence, stop_rich_presence
 from configuration import ProjectManager, application
 
 app = flask.Flask(__name__)
@@ -123,23 +122,6 @@ def handle_project_deletion(project_name):
     except OSError as error:
         print(f"Failed to delete project: Error was passed: {error}")
 
-@socketio.on("activate_rpc")
-def activate_discord_rpc():
-    """Starts discord rpc on socket request"""
-    global RICH_PRESENCE_STATUS
-    RICH_PRESENCE_STATUS = "Discord is connected"
-    rich_presence_handling()
-
-@socketio.on("request_presence_status")
-def rich_presence_handling():
-    """Handles sending js discord presence status on refresh"""
-    emit("send_presence_data", RICH_PRESENCE_STATUS)
-
-@socketio.on("stop_presence")
-def rich_presence_stopper():
-    """Handles stopping discord rich presence on socket request"""
-    stop_rich_presence()
-
 @socketio.on("connected_to_project")
 def handle_project_connections():
     """Handles users connecting to a project"""
@@ -166,8 +148,6 @@ def home():
     """Launches the home page"""
     template_string = "home.html"
     u = user_data
-    if RICH_PRESENCE_STATUS == "Discord is connected":
-        start_rich_presence(f"{project.user} is browsing: Home | {application.app_name}")
     return flask.render_template(
         template_string,
         appName = application.app_name,
@@ -221,8 +201,6 @@ def projects():
     """Returns projects page"""
     template_string = "projects.html"
     if current_user.is_authenticated:
-        if RICH_PRESENCE_STATUS == "Discord is connected":
-            start_rich_presence(f"{project.user} is browsing: Projects | {application.app_name}")
         return flask.render_template(template_string,
                                     appName = application.app_name)
     else:
@@ -236,8 +214,6 @@ def open_project(project_name):
     with open(f'templates/labs/projects/{project_name}/project_details.json', 
               encoding="UTF-8") as details:
         data = json.load(details)
-        if RICH_PRESENCE_STATUS == "Discord is connected":
-            start_rich_presence(f"{project.user} is Designing: {project_name}")
         return flask.render_template(template_string,
                                     selected_project = f"labs/projects/{project_name}/{data["project_details"]["entry_point"]}",
                                     appName = f"{application.app_name} | {project.project_name}")
