@@ -8,12 +8,63 @@
     <title>{{appName}} | Projects</title>
 </head>
 <body>
-    <div>
-        <input type="text" placeholder="Enter project name" id="project_creation_input" class="custom_design_labs_input"/>
-        <button onclick="createProject();" class="custom_design_labs_button">Create Project</button>
+
+    <div id="projects_list">
+        <div id="projects_list_header">
+            <div>
+               <h3 class="custom_design_labs_header_text_h3">Projects</h3> 
+            </div>
+            
+
+            <div class="projects_input">
+                <input type="text" placeholder="Search for a project"/>
+                <button id="open_project_creation_button" class="projects_list_command_option">
+                    <i class="fa-solid fa-circle-plus"></i>
+                </button>
+            </div>
+
+            <div class="project_controls">
+                <button class="projects_list_command_option" id="open_project_button" hidden title="Open Project">
+                    <i class="fa-regular fa-folder-open"></i>
+                </button>
+
+                <button class="projects_list_command_option" id="delete_project_button" hidden title="Delete Project">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </div>
+
+        </div>
     </div>
 
-    <div id="projects_list"></div>
+    <div class="project_backdrop">
+        <div class="project_create_popup" id="project_create_popup">
+            <button id="close_creation_popup_button">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div>
+                <p>Project Name</p>
+                <input type="text" placeholder="Project Name" id="project_creation_input"/>
+            </div>
+
+            <div>
+                <p>HTML file name</p>
+                <input type="text" placeholder="HTML file name" id="html_file_input"/>
+            </div>
+
+            <div class="inlcusion_checkbox">
+                <input type="checkbox" id="css_inclusion_checkbox"/>
+                <p>Include CSS file</p>
+            </div>
+
+            <div class="inlcusion_checkbox">
+                <input type="checkbox" id="js_inclusion_checkbox"/>
+                <p>Include JavaScript file</p>
+            </div>
+            <button id="project_creation_button">Setup project</button>
+        </div>
+    </div>
+    
     <script src="/static/app/index.js" type="module"></script>
+    <script src="/static/app/projects.js"></script>
 </body>
 </html>
