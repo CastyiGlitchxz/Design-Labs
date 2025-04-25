@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
+
 'use client'
 
-/* eslint-disable @next/next/no-img-element */
 import login_styling from "./login.module.css"
 import favicon from "../favicon.ico"
 import { useEffect, useState } from "react"
@@ -12,7 +14,7 @@ export default function Signup() {
         password: "",
     })
 
-    const setInformation = (event) => {
+    const setInformation = (event: any) => {
         const {name, value} = event.target;
         setaccountData(prevState => ({
             ...prevState,

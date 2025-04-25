@@ -10,9 +10,9 @@ export default function Login() {
     const [accountData, setaccountData] = useState({
         user_name: "",
         password: "",
-    })
+    });
 
-    const setInformation = (event) => {
+    const setInformation = (event: { target: { name: string; value: string } }) => {
         const {name, value} = event.target;
         setaccountData(prevState => ({
             ...prevState,
@@ -22,14 +22,14 @@ export default function Login() {
 
     function login() {
         socket.emit("account_login", accountData);
-    }
+    };
     
     useEffect(() => {
         socket.once("login_successful", (data) => {
             sessionStorage.setItem("user_name", data);
             window.location.href = ".";
-        })
-    })
+        });
+    }, []);
 
     return (
         <div className={login_styling["login-container"]}>
@@ -38,12 +38,10 @@ export default function Login() {
 
                 <div className={login_styling["input-container"]}>
                     <span className={login_styling["login-input-container"]}>
-                        <i className="fa-regular fa-circle-user"></i>
                         <input type="text" name="user_name" id="" placeholder="Username" required onChange={setInformation}/>
                     </span>
 
                     <span className={login_styling["login-input-container"]}>
-                        <i className="fa-solid fa-lock"></i>
                         <input type="password" name="password" id="" placeholder="Password" required onChange={setInformation}/>
                     </span>
                 </div>

@@ -1,9 +1,11 @@
 [![Pylint](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/pylint.yml/badge.svg)](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/pylint.yml)
 [![ESLint](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/eslint.yml/badge.svg?branch=main)](https://github.com/CastyiGlitchxz/Design-Labs/actions/workflows/eslint.yml)
-# How to use Design Labs
 
 
-<img src="./external/assets/simple_banner.png"/>
+<img src="./external/assets/simple_banner.png" style="border-radius: 24px"/>
+
+# Design Labs: Basic Setup
+ Design labs uses MongoDB for the database.
 
  To use Design Labs you first need to open ```terminal for macOS and Linux```, ```Command Prompt or PowerShell for Windows```, on your computer and cd to the location of server.py
  Then run 

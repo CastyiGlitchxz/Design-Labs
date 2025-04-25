@@ -1,25 +1,33 @@
 """Server.py"""
 import os
 import shutil
+import threading
 from datetime import datetime
 import json
 import configparser
-import flask
+import uuid
+from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from user import UserManager
 from database import try_account_access, add_account
+# from plugin_manager import runtime
+from rich_presence import PresenceManager
 
-app = flask.Flask(__name__, template_folder="../projects", static_folder="../projects")
+app = Flask(__name__, template_folder="../projects", static_folder="../projects")
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 config = configparser.ConfigParser()
 config.read("config/service.config")
 
 SECRET_KEY = config["app_keys"]["secret_key"]
-
 app.secret_key = SECRET_KEY
-
 user = UserManager("", "")
+
+# presence = PresenceManager(state="...",
+#                            details="A simple online designing app (Still in development)")
+
+# rpc_thread = threading.Thread(target=presence.start_rich_presence)
+# rpc_thread.start()
 
 PROJECTS_FOLDER_DIR = "../projects"
 if not os.path.exists(PROJECTS_FOLDER_DIR):
@@ -40,11 +48,19 @@ else:
         }
         json.dump(file_template, indent=4, fp=tasks_file)
 
+@socketio.on("connection")
+def on_connection():
+    """Runs when the frontend connects to the backend"""
+    path = "../projects"
+    dir_list = os.listdir(path)
+    emit('projects_list', dir_list)
+
 @socketio.on("create_project")
 def handle_project_creation(project_name, html_filename, css_included, js_included, file_ext):
     """Handles project creation"""
     project_dir = f"../projects/{project_name}"
     script_dir = f"../projects/{project_name}"
+    username = user.get_username
 
     converted_filext = ""
 
@@ -60,7 +76,7 @@ def handle_project_creation(project_name, html_filename, css_included, js_includ
         "project_details": {
             "project_name": f"{project_name}",
             "creation_date": f"{datetime.today().strftime('%Y-%m-%d')}",
-            "creator": f"{user.get_username}",
+            "creator": f"{username}",
             "entry_point": f"{html_filename}",
             "js_file": f"{js_included}",
             "css_file": f"{css_included}"
@@ -113,13 +129,6 @@ def handle_project_deletion(project_name):
     except OSError as error:
         print(f"Failed to delete project: Error was passed: {error}")
 
-@socketio.on("connection")
-def on_connection():
-    """Runs when the frontend connects to the backend"""
-    path = "../projects"
-    dir_list = os.listdir(path)
-    emit('projects_list', dir_list)
-
 @socketio.on("account_login")
 def login_user(account_details):
     """Repsonsible for logging in a user"""
@@ -128,6 +137,9 @@ def login_user(account_details):
         user.get_username = account_details["user_name"]
         user.is_logged_in = True
         emit("login_successful", user.get_username)
+        print(user.get_username)
+    else:
+        print("Failed to find acc")
 
 @socketio.on("account_signup")
 def signup_user(account_details):
@@ -165,8 +177,8 @@ def get_tasks():
 @socketio.on("add_task")
 def add_task(task):
     """Adds a task to the task list"""
-    print("Works?")
-    task_data = {"name": task["task_name"], "desc": task["task_desc"], "date": task["date"]}
+    uuid_gen = uuid.uuid4()
+    task_data = {"name": task["task_name"], "desc": task["task_desc"], "date": task["date"], "task_id": str(uuid_gen)}
     if os.path.exists("../tasks.json") and os.path.getsize("../tasks.json") > 0:
         try:
             with open("../tasks.json", "r", encoding="UTF-8") as file:
@@ -204,6 +216,33 @@ def delete_task(task_name):
 
     print(f"Task '{task_name}' deleted from {"../tasks.json"}")
 
+@socketio.on("get_project_data")
+def get_project_data(project):
+    """Gets the requested project's data"""
+    render_file = ""
+    # presence.update_rich_presence(f"Working on {project}")
+    with open(f"{PROJECTS_FOLDER_DIR}/{project}/project_details.json", encoding="UTF-8") as details:
+        json_data = json.load(details)
+        render_file = json_data["project_details"]["entry_point"]
+
+    with open(f"{PROJECTS_FOLDER_DIR}/{project}/{render_file}",
+              "r", encoding="UTF-8") as project_file:
+        lines = project_file.read()
+        emit("return_project_data", lines)
+
+@socketio.on("project_write")
+def project_write(project, data):
+    """This writes the data to the project file"""
+    render_file = ""
+    with open(f"{PROJECTS_FOLDER_DIR}/{project}/project_details.json", encoding="UTF-8") as details:
+        json_data = json.load(details)
+        render_file = json_data["project_details"]["entry_point"]
+
+    with open(f"{PROJECTS_FOLDER_DIR}/{project}/{render_file}",
+              "w", 
+              encoding="UTF-8") as project_file:
+        project_file.write(data)
+
 @app.route("/projects/<project_name>")
 def projects(project_name):
     """Renders project folder for frontend"""
@@ -211,8 +250,8 @@ def projects(project_name):
             "r", encoding="UTF-8") as details:
         project_details = json.load(details)
         entry = project_details["project_details"]["entry_point"]
-        return flask.render_template(f"{project_name}/{entry}")
+        return render_template(f"{project_name}/{entry}")
 
 # Note: this is not a production server
 if __name__ == "__main__":
-    socketio.run(app, debug=False, host="0.0.0.0", port=8000)
+    socketio.run(app, debug=True, host="0.0.0.0", port=8000)

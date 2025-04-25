@@ -1,12 +1,30 @@
+.editor {
+    display: grid;
+}
+
+.editor_panels {
+    display: flex;
+    width: 100%;
+    height: 96vh;
+}
+
+.editor_nav {
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    align-items: center;
+    background: black;
+}
+
 .project_creation_modal {
     position: fixed;
     background: black;
     display: grid;
     width: 60rem;
     height: 34rem;
-    align-self: center;
     border-radius: 4px;
     grid-template-rows: 19%;
+    left: 20vw;
 }
 
 .modal_header {
@@ -69,9 +87,20 @@
 }
 
 .project_viewer {
-    width: 100vw;
-    height: 100vh;
+    background: black;
+    width: 80vw;
+    height: 100%;
     border: 0;
+    display: grid;
+    grid-template-rows: 2.7pc;
+}
+
+.render {
+    width: 100%;
+    height: 100%;
+    contain: content;
+    background: black;
+    display: grid;
 }
 
 .project {
@@ -93,7 +122,36 @@
     display: flex;
     width: fit-content;
     padding: 0px 7px 0px 0px;
-    gap: 7px;
+    gap: 15px;
+}
+
+.project_options button {
+    background: transparent;
+    border: 0;
+    font-size: 17;
+}
+
+#delete_button {
+    color: red;
+}
+
+.opened_task {
+    width: 60pc;
+    height: 20pc;
+    background: rgba(0, 0, 0, 0.814);
+    border: 1px solid rgb(126, 0, 0);
+    border-radius: 5px;
+    position: fixed;
+    left: 21vw;
+    top: 20vh;
+    padding: 25px;
+}
+
+.task_id {
+    color: gray;
+    position: absolute;
+    top: 2%;
+    right: 1%;
 }
 
 .create_button {
@@ -106,4 +164,45 @@
     font-size: 13px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 570;
+}
+
+.editor_panel {
+    width: 13%;
+    height: 100%;
+    background: rgb(18, 18, 18);
+    display: grid;
+    grid-template-rows: 5%;
+}
+
+.editor_panel button {
+    height: 1rem;
+}
+
+.panel_header {
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border: 1px solid gray;
+}
+
+#code_editor {
+    height: 100%;
+    width: 100%;
+    background: black;
+    outline: none;
+}
+
+.mode_switch_panel {
+    width: 3vw;
+    height: 100%;
+}
+
+.mode_switch_panel button {
+    width: 100%;
+    height: 5%;
+    border: 0.5px solid red;
+    border-radius: 8px;
 }

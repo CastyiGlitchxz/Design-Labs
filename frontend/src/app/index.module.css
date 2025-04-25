@@ -52,6 +52,7 @@
 .version_badge {
     width: fit-content;
     height: fit-content;
+    align-items: center;
     display: flex;
     padding: 6px 17px;
     border-radius: 9px;
@@ -59,6 +60,28 @@
     position: fixed;
     bottom: 2vh;
     right: 2vw;
+}
+
+.badge_quick_tools {
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    display: flex;
+    padding: 3px 17px;
+    border-radius: 9px;
+    border: 1px solid gray;
+    position: fixed;
+    bottom: 2vh;
+    right: 9vw;
+    gap: 23px;
+}
+
+.badge_quick_tools a {
+    background: transparent;
+    border: 0;
+    width: fit-content;
+    height: fit-content;
+    font-size: 21px;
 }
 
 .user_profile {

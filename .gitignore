@@ -3,7 +3,12 @@ __pycache__/
 .DS_Store
 projects/**
 node_modules/
-config/
 backend/templates/
 backend/static/
 tasks.json
+backend/config/service.config
+backend/rich_presence
+backend/test.py
+backend/plugins/
+backend/plugin_manager.py
+backend/rich_presence.py

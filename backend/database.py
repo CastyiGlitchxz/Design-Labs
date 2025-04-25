@@ -16,27 +16,29 @@ ACCOUNTS = DB["users"]
 
 def get_accounts():
     """Gets all database users"""
-    for user in ACCOUNTS.find():
-        return user
+    for users in ACCOUNTS.find({}):
+        return users
 
 def user_exist(username) -> str:
     """Checks to see if a user exists"""
     if ACCOUNTS.find_one({"user_name":username}):
         print(f"The user: {username} exists")
         return True
-    else:
-        print("The provided username is not linked to an account")
-        return False
+    print("The provided username is not linked to an account")
+    return False
 
 def try_account_access(username, password):
     """Tries to access and account"""
-    if check_password_hash( pwhash=ACCOUNTS.find_one({"user_name": username})["password"],
-                        password=password ):
+    try:
         if ACCOUNTS.find_one({"user_name":username}):
-            print("Account Access Granted")
-            return True
-    print("Username or password is incorrect")
-    return False
+            if check_password_hash( pwhash=ACCOUNTS.find_one({"user_name": username})["password"],
+                    password=password ):
+                print("Account Access Granted")
+                return True
+        print("Username or password is incorrect")
+        return False
+    except TypeError:
+        return False
 
 def add_account(username, password):
     """Adds an user to the database"""
@@ -50,6 +52,7 @@ def add_account(username, password):
         "password":generate_password_hash(password),
         "userid":uuid_gen,
         "creation_date": todays_date.strftime("%c"),
+        "permissions": [],
         "email": "",
     }
     ACCOUNTS.insert_one(user_details)
