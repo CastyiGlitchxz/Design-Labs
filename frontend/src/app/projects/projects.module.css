@@ -1,0 +1,208 @@
+.editor {
+    display: grid;
+}
+
+.editor_panels {
+    display: flex;
+    width: 100%;
+    height: 96vh;
+}
+
+.editor_nav {
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    align-items: center;
+    background: black;
+}
+
+.project_creation_modal {
+    position: fixed;
+    background: black;
+    display: grid;
+    width: 60rem;
+    height: 34rem;
+    border-radius: 4px;
+    grid-template-rows: 19%;
+    left: 20vw;
+}
+
+.modal_header {
+    width: 100%;
+    height: 3rem;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    background: rgb(27, 27, 27);
+    padding: 12px 6px 12px 6px;
+}
+
+.parent_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.modal_panel {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.modal_panel input[type=text] {
+    background: rgb(36, 36, 36);
+    height: 2.3rem;
+    width: 16rem;
+    border-radius: 6px;
+    outline: none;
+    border: 1px solid #565656;
+    text-indent: 6px;
+}
+
+.info_badge {
+    background: #1b1b1b;
+    height: 2.3rem;
+    align-content: center;
+    text-indent: 6px;
+    align-items: center;
+    border-radius: 9px;
+    border: 1px solid #565656;
+    padding: 8px;
+}
+
+.modal_footer {
+    display: flex;
+    height: 3rem;
+    align-content: center;
+    justify-content: right;
+    align-self: end;
+}
+
+.modal_footer button {
+    height: 2rem;
+    border-radius: 5px;
+    width: 5rem;
+    margin: 0px 12px;
+}
+
+.project_viewer {
+    background: black;
+    width: 80vw;
+    height: 100%;
+    border: 0;
+    display: grid;
+    grid-template-rows: 2.7pc;
+}
+
+.render {
+    width: 100%;
+    height: 100%;
+    contain: content;
+    background: black;
+    display: grid;
+}
+
+.project {
+    width: 40rem;
+    height: 3rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-indent: 7px;
+    background: black;
+    color: white;
+    border: 0.6 solid rgb(87, 87, 87);
+    margin: 12px;
+}
+
+.project_options {
+    justify-content: space-between;
+    display: flex;
+    width: fit-content;
+    padding: 0px 7px 0px 0px;
+    gap: 15px;
+}
+
+.project_options button {
+    background: transparent;
+    border: 0;
+    font-size: 17;
+}
+
+#delete_button {
+    color: red;
+}
+
+.opened_task {
+    width: 60pc;
+    height: 20pc;
+    background: rgba(0, 0, 0, 0.814);
+    border: 1px solid rgb(126, 0, 0);
+    border-radius: 5px;
+    position: fixed;
+    left: 21vw;
+    top: 20vh;
+    padding: 25px;
+}
+
+.task_id {
+    color: gray;
+    position: absolute;
+    top: 2%;
+    right: 1%;
+}
+
+.create_button {
+    background: rgb(0, 0, 0);
+    border: 1px solid rgb(47, 47, 47);
+    width: 7rem;
+    height: 74%;
+    border-radius: 7px;
+    margin: 0px 5px;
+    font-size: 13px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 570;
+}
+
+.editor_panel {
+    width: 13%;
+    height: 100%;
+    background: rgb(18, 18, 18);
+    display: grid;
+    grid-template-rows: 5%;
+}
+
+.editor_panel button {
+    height: 1rem;
+}
+
+.panel_header {
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border: 1px solid gray;
+}
+
+#code_editor {
+    height: 100%;
+    width: 100%;
+    background: black;
+    outline: none;
+}
+
+.mode_switch_panel {
+    width: 3vw;
+    height: 100%;
+}
+
+.mode_switch_panel button {
+    width: 100%;
+    height: 5%;
+    border: 0.5px solid red;
+    border-radius: 8px;
+}
