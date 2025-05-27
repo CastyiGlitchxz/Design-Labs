@@ -3,6 +3,7 @@
 
 
 <img src="./external/assets/simple_banner.png" style="border-radius: 24px"/>
+
 # Dependancies
 
 Design labs requires MongoDB and Python. If you are deploying to the public intenet, you may also want to use Flask.
