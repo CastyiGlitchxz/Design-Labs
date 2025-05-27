@@ -4,7 +4,12 @@
 
 <img src="./external/assets/simple_banner.png" style="border-radius: 24px"/>
 
+# Dependancies
+
+Design labs requires MongoDB and Python. If you are deploying to the public intenet, you may also want to use Flask.
+
 # Design Labs: Basic Setup
+
  Design labs uses MongoDB for the database.
 
  To use Design Labs you first need to open ```terminal for macOS and Linux```, ```Command Prompt or PowerShell for Windows```, on your computer and cd to the location of server.py
@@ -14,11 +19,11 @@
  ```Python server.py``` for Windows and Linux to run the server
 
  Then go to http://127.0.0.1:8000
- There you go you have Design Labs running
+ There you go! You have Design Labs running on localhost!
 
 # How to load Labs
 
- When you first open Design Labs you will see the landing page. Look at the top where the navbar is and click the projects button to go to the projects page. The projects list will be empty by default, to create a project click the ```+``` button and input your project details. Then click the create project button.
+ When you first open Design Labs you will see the landing page. Look at the top where the navbar is and click the "projects" button to go to the projects page. The projects list will be empty by default, to create a project click the ```+``` button and input your project details. Then click the "create project" button.
 
  When you have successfully created a project, your project will be added to the projects list, where you can access it when you need to.
 
