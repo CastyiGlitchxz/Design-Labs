@@ -4,8 +4,10 @@
 
 <img src="./external/assets/simple_banner.png" style="border-radius: 24px"/>
 # Dependancies
+
 Design labs requires MongoDB and Python. If you are deploying to the public intenet, you may also want to use Flask.
 # Design Labs: Basic Setup
+
  Design labs uses MongoDB for the database.
 
  To use Design Labs you first need to open ```terminal for macOS and Linux```, ```Command Prompt or PowerShell for Windows```, on your computer and cd to the location of server.py
