@@ -6,6 +6,7 @@
 # Dependancies
 
 Design labs requires MongoDB and Python. If you are deploying to the public intenet, you may also want to use Flask.
+
 # Design Labs: Basic Setup
 
  Design labs uses MongoDB for the database.
