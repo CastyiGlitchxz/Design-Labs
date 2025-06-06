@@ -12,3 +12,4 @@ backend/test.py
 backend/plugins/
 backend/plugin_manager.py
 backend/rich_presence.py
+test/

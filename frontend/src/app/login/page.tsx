@@ -32,22 +32,24 @@ export default function Login() {
     }, []);
 
     return (
-        <div className={login_styling["login-container"]}>
-            <div className={login_styling["login-centered-content"]}>
-                <img src={favicon.src} width="90" height="90" id={login_styling["logo"]} alt="Something meaningful"/>
+        <div className={login_styling["login-body"]}>
+            <div className={login_styling["login-container"]}>
+                <div className={login_styling["login-centered-content"]}>
+                    <img src={favicon.src} width="90" height="90" id={login_styling["logo"]} alt="Something meaningful"/>
 
-                <div className={login_styling["input-container"]}>
-                    <span className={login_styling["login-input-container"]}>
-                        <input type="text" name="user_name" id="" placeholder="Username" required onChange={setInformation}/>
-                    </span>
+                    <div className={login_styling["input-container"]}>
+                        <span className={login_styling["login-input-container"]}>
+                            <input type="text" name="user_name" id="" placeholder="Username" required onChange={setInformation}/>
+                        </span>
 
-                    <span className={login_styling["login-input-container"]}>
-                        <input type="password" name="password" id="" placeholder="Password" required onChange={setInformation}/>
-                    </span>
+                        <span className={login_styling["login-input-container"]}>
+                            <input type="password" name="password" id="" placeholder="Password" required onChange={setInformation}/>
+                        </span>
+                    </div>
+
+                    <button className={login_styling["login-button"]} onClick={() => login()}>Login</button>
+                    <a href="/signup">Need an account?</a>
                 </div>
-
-                <button className={login_styling["login-button"]} onClick={() => login()}>Login</button>
-                <a href="/signup">Need an account?</a>
             </div>
         </div>
     )

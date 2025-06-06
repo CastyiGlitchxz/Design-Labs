@@ -113,7 +113,7 @@
     text-indent: 7px;
     background: black;
     color: white;
-    border: 0.6 solid rgb(87, 87, 87);
+    border: 0.6px solid rgb(87, 87, 87);
     margin: 12px;
 }
 
@@ -128,7 +128,7 @@
 .project_options button {
     background: transparent;
     border: 0;
-    font-size: 17;
+    font-size: 17px;
 }
 
 #delete_button {
