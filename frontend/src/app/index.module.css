@@ -186,3 +186,20 @@
     gap: 12px;
     padding-top: 6px
 }
+
+@media screen and (max-width: 80rem) {
+    .app_dashboard {
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+    }
+
+    .dash_container {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .badge_quick_tools {
+        right: 27vw;
+    }
+}

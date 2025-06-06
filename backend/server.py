@@ -1,7 +1,6 @@
 """Server.py"""
 import os
 import shutil
-import threading
 from datetime import datetime
 import json
 import configparser
@@ -10,8 +9,6 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from user import UserManager
 from database import try_account_access, add_account
-# from plugin_manager import runtime
-from rich_presence import PresenceManager
 
 app = Flask(__name__, template_folder="../projects", static_folder="../projects")
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -23,19 +20,11 @@ SECRET_KEY = config["app_keys"]["secret_key"]
 app.secret_key = SECRET_KEY
 user = UserManager("", "")
 
-# presence = PresenceManager(state="...",
-#                            details="A simple online designing app (Still in development)")
-
-# rpc_thread = threading.Thread(target=presence.start_rich_presence)
-# rpc_thread.start()
-
 PROJECTS_FOLDER_DIR = "../projects"
 if not os.path.exists(PROJECTS_FOLDER_DIR):
     os.makedirs(PROJECTS_FOLDER_DIR)
 
-if os.path.exists("../tasks.json"):
-    print("Tasks file already exists")
-else:
+if not os.path.exists("../tasks.json"):
     with open("../tasks.json", "w", encoding="UTF-8") as tasks_file:
         file_template = {
             "tasks": [
@@ -56,18 +45,11 @@ def on_connection():
     emit('projects_list', dir_list)
 
 @socketio.on("create_project")
-def handle_project_creation(project_name, html_filename, css_included, js_included, file_ext):
+def handle_project_creation(project_name, html_filename, css_included, js_included):
     """Handles project creation"""
     project_dir = f"../projects/{project_name}"
     script_dir = f"../projects/{project_name}"
     username = user.get_username
-
-    converted_filext = ""
-
-    if file_ext == "TypeScript":
-        converted_filext = "ts"
-    elif file_ext == "JavaScript":
-        converted_filext = "js"
 
     if ".html" not in html_filename:
         html_filename = html_filename + ".html"
@@ -88,7 +70,7 @@ def handle_project_creation(project_name, html_filename, css_included, js_includ
     html_template = f"""<link rel="stylesheet" href="{script_dir.replace('.', '')}/{project_name}.css"/>
 <main>
 
-    <script src="{script_dir.replace('.', '')}/{project_name}.{converted_filext}"></script>
+    <script src="{script_dir.replace('.', '')}/{project_name}.js"></script>
 </main>
 """
 
@@ -106,8 +88,8 @@ def handle_project_creation(project_name, html_filename, css_included, js_includ
                             css_file.write(f"/* This is the css file for {project_name} */")
 
                 if js_included == "Yes":
-                    if not os.path.exists(f"{script_dir}/{project_name}.{converted_filext}"):
-                        with open(os.path.join(script_dir, f"{project_name}.{converted_filext}"),
+                    if not os.path.exists(f"{script_dir}/{project_name}.js"):
+                        with open(os.path.join(script_dir, f"{project_name}.js"),
                                   "w",
                                 encoding="UTF-8") as js_file:
                             js_file.write(f"// This is the js file for {project_name}")
@@ -220,7 +202,6 @@ def delete_task(task_name):
 def get_project_data(project):
     """Gets the requested project's data"""
     render_file = ""
-    # presence.update_rich_presence(f"Working on {project}")
     with open(f"{PROJECTS_FOLDER_DIR}/{project}/project_details.json", encoding="UTF-8") as details:
         json_data = json.load(details)
         render_file = json_data["project_details"]["entry_point"]
