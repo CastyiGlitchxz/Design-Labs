@@ -196,7 +196,7 @@ def delete_task(task_name):
     with open("../tasks.json", "w", encoding="UTF_8") as file:
         json.dump(data, file, indent=4)  # Save updated JSON back to file
 
-    print(f"Task '{task_name}' deleted from {"../tasks.json"}")
+    print(f"Task: '{task_name}' deleted from ../tasks.json")
 
 @socketio.on("get_project_data")
 def get_project_data(project):
